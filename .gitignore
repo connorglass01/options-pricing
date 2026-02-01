@@ -1,6 +1,6 @@
-src/asian/asian-mc
+src/asian/
+src/vanilla/
 
-src/vanilla/vanilla-closed-form
-src/vanilla/vanilla-mc
+src/main
 
 .vscode/
