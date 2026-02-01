@@ -51,7 +51,7 @@ double monte_carlo_price(double S, double K, double T, double r, double sigma,
 
 int main()
 {
-    std::cout << monte_carlo_price(40, 35, 4.0/12.0, 0.07, 0.2, 88, 10000, "call") << '\n';
+    std::cout << monte_carlo_price(100, 110, 1.0, 0.05, 0.2, 252, 10000, "call") << '\n';
     std::cout << monte_carlo_price(40, 35, 4.0/12.0, 0.07, 0.2, 88, 10000, "put") << '\n';
     return 0;
 }

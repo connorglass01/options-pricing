@@ -39,7 +39,7 @@ double bsPrice(double S, double K, double T, double r, double sigma, std::string
 
 int main()
 {
-    double C { bsPrice(100, 90, 1.0, 0.07, 0.2, "call") };
+    double C { bsPrice(100, 110, 1.0, 0.05, 0.2, "call") };
     double P { bsPrice(100, 90, 1.0, 0.07, 0.2, "put") };
     
     std::cout << C << '\n' << P << '\n';
