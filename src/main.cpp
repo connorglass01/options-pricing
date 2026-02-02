@@ -53,9 +53,9 @@ int main(int argc, char* argv[])
  
 
     std::cout << "Price: " << result.price << '\n';
-    std::cout << "RelErr: " << result.relErr << '\n';
-    std::cout << "CI Low: " << result.ciLow << '\n';
-    std::cout << "CI High: " << result.ciHigh << '\n';
+    //std::cout << "RelErr: " << result.relErr << '\n';
+    //std::cout << "CI Low: " << result.ciLow << '\n';
+    //std::cout << "CI High: " << result.ciHigh << '\n';
     std::cout << "Paths: " << result.numPaths << '\n';
     return 0;
 }

@@ -1,78 +1,43 @@
 # options-pricing
+The repository prices European-style options with Monte Carlo simulation.
 
-*** write summary ***
+## Usage
+At the moment the pricing-engine only works for Vanilla and Asia (Average). Below is a short guide on using CMake to obtain the executable.
+1. Run ```cmake -S . -B ./build``` from the ```options-pricing/``` directory
+2. From the ```options-pricing/build/``` directory run ```make```. This will output a binary file ```price``.
 
+The engine is preset to pricing a call option with $S_0 = 100$, $K=0$, $T=1.0$, $r=0.05$, $\sigma  = 0.2$. For now, to change these value the user is asked to modify ```include/pricing/types.h``` to the desired parameters.
 
-## Features
+Usage Example:
+From the ```options-pricing/``` directory,
+```
+$ ./build/price vanilla
+Price: 6.21958
+Paths: 10000
 
-
-## Theory
-
-### The Black-Scholes(-Merton) Model
-
-*** NEED TO MAKE SURE THE FILTRATION IS CONSISTENT ***
-
-In this section we provide a brief summary of the Black-Scholes model. We assume familiarity with common notions in probability theory to the level of an typical graduate level course.
-In what follows, let $(\Omega, \mathcal{F}, \mathbb{P})$ be a filtered probability space, with respect to the filtration $\{\mathcal{F}_t, t\geq 0\}$. It is common to refer to $\mathbb{P}$ as the "physical" probability measure.
-
-DESCRIBE WHAT THE BLACK-SCHOLES MODEL DOES
-
-We consider a portfolio consisting of two assets. The first, a risk-free asset (i.e. treasury bonds, or money market) $\{B_t, 0\leq t\leq T\}$, with constant risk-free (interest) rate $r>0$. The risk-free asset is modelled by the deterministic differential equation
-$$
-dB_t = r \,B_t\,dt, \qquad B_0 = 1.
-$$
-Of course, 
-$$
-B_t = \exp\left(rT\right)
-$$
-
-The second, a risky-asset given by a non-dividend paying stock with price process $\{S_t, 0\leq t\leq T\}$ which follows a geometric Brownian motion given by the stochastic differential equation
-$$
-dS_t = \mu \, S_t\, dt + \sigma \, S_t \, dW_t, \qquad S_0 > 0.
-$$
-where $\mu > 0$ is the drift rate, $\sigma >0$ is the volatility, and $\{W_t, 0\leq t \leq T\}$ is a Weiner process under $\mathbb{P}$.
+$ ./build/price vanilla put
+Price: 10.5859
+Paths: 10000
+```
 
 
-***The First Fundamental Theorem of Asset Pricing*** A market is arbitrage-free, if and only if, there exists an equivalent measure $\mathbb{Q}$ such that the discounted asset price process $\{B_t^{-1}S_t\}$ is a $(\{\mathcal{F}_t\}, \mathbb{Q})$-martingale, that is to say, there exists a risk-neutral probability measure $\mathbb{Q}$.
 
-A market is said to be complete if FINISH THIS ******
+## Basic Theory
+### Black-Scholes Model - General Pricing Formula
+Famously, Black, Scholes and Merton derived a general pricing formula for European-style options. The model considers a portfolio consisting of a risk-free asset and a risky asset. The risk-free asset (i.e. treasury bonds, or money markets) $\{B_t, 0\leq t\leq T\}$, with constant risk-free (interest) rate $r>0$, is modelled by the deterministic differential equation
+$$ dB_t = r\, B_t\, dt, \qquad B_0 = 1.$$
+whose solution is given by $B_t = \exp(rT)$. The risky asset is a non-dividend paying stock with price process $\{S_t, 0\leq t \leq T\}$ which follows a geometric Brownian motion, that is, 
+$$dS_t = \mu \, S_t\, dt + \sigma \, S_t \, dW_t, \qquad S_0 > 0. $$
 
+where $\mu > 0$ is the drift rate, $\sigma >0$ is the volatility, and $\{W_t, 0\leq t \leq T\}$ is a Weiner process.
 
-***The Second Fundamental Theorem of Asset Pricing*** A market is complete if and only if the risk-neutral measure is unique. 
+Under the additional assumptions ... . The gerneral pricing formula
+$$ V_t = \mathbb{E}_{\mathbb{Q}}[B_T^{-1}C_T | \mathcal{F}_t], \qquad 0\leq t \leq T.$$
 
-*** STATE ASSUPTIONS AND HOW WE THEN GET THE FORMULA FOR BELOW ***
-
-Derive up to 
-$$
-V_t = B_t \mathbb{E}_{\mathbb{Q}}[B_T^{-1} V_T | \mathcal{F}_t], \qquad t \leq T.
-$$
-
-For the majority of the options in TABLE, there is no closed for solution to the expression above. Hence, one uses Monte Carlo simulations to approximate the price using the equation above.
+In the case of European vanilla options analytic solution known as the Black-Scholes formula exists. However, for many other European-style options no closed-form solutions exist, and so we turn to numerical approximations. 
 
 ### Pricing via Monte Carlo Simulation
 
-
-
-
-#### Example: European Style Asian (Average) Options
-Consider the European style Asian call option with maturity $T$ and strike price $K$.
-The pay-off function at maturity is of the form
-$$
-C_T = (A_T - K)^+
-$$
-where $A_t$ denotes the average price of the underlying asset over the interval $[0,t]$, viz.
-$$
-A_t = \frac{1}{t}\int_0^t S_u \, ds, \quad t\in [0,T].
-$$
-
-Thus, under the Black-Scholes model described above, we assume the underlying asset is modelled by the SDE
-$$
-dS_t = \mu \,S_t\,dt + \sigma \,S_t\, dW_t
-$$
-where $\{W_t\}$ denotes a Weiner process under $\mathbb{P}$. Let $r$ denote the risk-free annual interest rate. Then by an analogous argument to above, the price of the European style Asian call option at $t\in [0,T]$, under the risk-neutral measure $\mathbb{Q}$ is given by
-$$
-C_t = \exp(-r(T-t))\mathbb{E}_{\mathbb{Q}}[(A_T - K)^+ | \mathcal{F}_t].
-$$
 
 
 

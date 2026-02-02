@@ -3,4 +3,10 @@ src/vanilla/
 
 src/main
 
+theory.pdf
+theory.synctex.gz
+theory.tex
+
 .vscode/
+
+build/
