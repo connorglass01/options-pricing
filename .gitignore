@@ -10,3 +10,5 @@ theory.tex
 .vscode/
 
 build/
+
+include/cli/

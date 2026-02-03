@@ -6,7 +6,7 @@ At the moment the pricing-engine only works for Vanilla and Asia (Average). Belo
 1. Run ```cmake -S . -B ./build``` from the ```options-pricing/``` directory
 2. From the ```options-pricing/build/``` directory run ```make```. This will output a binary file ```price``.
 
-The engine is preset to pricing a call option with $S_0 = 100$, $K=0$, $T=1.0$, $r=0.05$, $\sigma  = 0.2$. For now, to change these value the user is asked to modify ```include/pricing/types.h``` to the desired parameters.
+The engine is preset to pricing a call option with $S_0 = 100$, $K=110$, $T=1.0$, $r=0.05$, $\sigma  = 0.2$. For now, to change these value the user is asked to modify ```include/pricing/types.h``` to the desired parameters.
 
 Usage Example:
 From the ```options-pricing/``` directory,
@@ -22,7 +22,7 @@ Paths: 10000
 
 
 
-## Basic Theory
+## Basic Theory - under construction
 ### Black-Scholes Model - General Pricing Formula
 Famously, Black, Scholes and Merton derived a general pricing formula for European-style options. The model considers a portfolio consisting of a risk-free asset and a risky asset. The risk-free asset (i.e. treasury bonds, or money markets) $\{B_t, 0\leq t\leq T\}$, with constant risk-free (interest) rate $r>0$, is modelled by the deterministic differential equation
 $$ dB_t = r\, B_t\, dt, \qquad B_0 = 1.$$
