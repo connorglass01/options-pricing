@@ -12,4 +12,6 @@ add_executable(${PROJECT_NAME}
                 "include/pricing/engines.h"
                 "include/pricing/types.h"
                 "include/rng/Random.h"
+                "src/cli.cpp"
+                "include/cli/cli.h"
             )
