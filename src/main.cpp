@@ -18,25 +18,28 @@ int main(int argc, char* argv[])
     MCSettings settings;
     MarketData data;
 
-    if (argc < 3)
+    // Magic Number: We require the at least ~2~ inputs
+    if (argc < 2)
     {
-        std::cout << "Usage: $ <program name> --style <option style> \n";
+        std::cout << "Usage: $ <program name> <option style> \n";
         return 1;
     }
-
-    if (argc > 3)
+    else
     {
         try
-        {
+        {   // Retrieve the users desired parameters (optional)
+            // See "cli.h" and "cli.cpp" for implementation
             userArgs = parseArgs(argc, argv);
         }
         catch(const std::exception& e)
         {
+            // Catches errors thrown from parseArgs()
             std::cerr << e.what() << '\n';
             return 1;
         }
     }
 
+    // Reassignment of preset values to user desired values
     data.S0 = userArgs.S0;
     data.r = userArgs.r;
     data.sigma = userArgs.sigma;
@@ -53,33 +56,29 @@ int main(int argc, char* argv[])
     settings.numSteps = userArgs.numSteps;
     settings.seed = userArgs.seed;
 
-    // MAYBE REMOVE THE ---STYLE FLAG
-    
-    std::string_view style;
-
-    if (std::string(argv[1]) != "--style")
+     
+    std::string_view style { argv[1] }; 
+    // Checking the option style or for the --help flag
+    if (style == "--help" || userArgs.help)
     {
-        throw std::runtime_error("Usage: $ <program name> --style <option style>");
-        return 1; 
+        help_msg();
+        return 0;
+    }
+    if (style == "vanilla")
+    {
+        result = vanilla_mc(data, vanilla, settings);
+    }
+    else if (style == "asian")
+    {
+        result = asian_mc(data, asian, settings);
     }
     else
     {
-        style = argv[2];
-        if (style == "vanilla")
-        {
-            result = vanilla_mc(data, vanilla, settings);
-        }
-        else if (style == "asian")
-        {
-            result = asian_mc(data, asian, settings);
-        }
-        else
-        {
-            throw std::runtime_error("Invalid option style: " + std::string(style));
-            return 1;
-        }
-
+        throw std::runtime_error("Invalid option style: " + std::string(style));
+        return 1;
     }
+
+    // Printing the output
     std::cout << "----------------------------- \n"; 
     std::cout << "Price:    \t" << result.price << '\n';
     std::cout << "----------------------------- \n";

@@ -4,6 +4,7 @@
 #include <string>
 #include <cmath>
 #include <optional>
+#include <iostream>
 
 #include "../pricing/types.h"
 
@@ -27,10 +28,13 @@ struct CLIArgs
 
     std::optional<u_int64_t> seed;
 
-    bool help { false };
+    bool help {false};
 };
 
 CLIArgs parseArgs(int argc, char* argv[]);
-std::string usage();
+
+void help_msg();
+
+
 
 #endif

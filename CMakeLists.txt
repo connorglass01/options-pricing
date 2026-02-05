@@ -15,3 +15,5 @@ add_executable(${PROJECT_NAME}
                 "src/cli.cpp"
                 "include/cli/cli.h"
             )
+
+set(CMAKE_BUILD_TYPE Release)

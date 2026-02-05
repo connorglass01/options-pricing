@@ -23,7 +23,7 @@ CLIArgs parseArgs(int argc, char* argv[])
     CLIArgs userArgs;
 
     // Starting at 3 bc the first are reserved for ./price <optionstyle>
-    for (int i {3}; i < argc; ++i)
+    for (int i {2}; i < argc; ++i)
     {
         std::string_view arg { argv[i] };
 
@@ -31,7 +31,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("Type <put/call> missing after" + std::string(arg));
+                throw std::runtime_error("Option type <put/call> missing after " + std::string(arg));
             }
             std::string_view option_type { argv[++i] };
             
@@ -48,7 +48,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("S0 value missing after" + std::string(arg));
+                throw std::runtime_error("Underlying asset initial value (S0) missing after " + std::string(arg));
             }
 
             const std::string name { "S0" };
@@ -60,7 +60,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("K value missing after" + std::string(arg));
+                throw std::runtime_error("Strike price (K) value missing after " + std::string(arg));
             }
 
             const std::string name { "K" };
@@ -72,7 +72,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("r value missing after" + std::string(arg));
+                throw std::runtime_error("Risk-free interest rate (r) value missing after " + std::string(arg));
             }
 
             const std::string name { "r" };
@@ -84,7 +84,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("Sigma value missing after" + std::string(arg));
+                throw std::runtime_error("Volatility (sigma) value missing after " + std::string(arg));
             }
 
             const std::string name { "Sigma" };
@@ -96,7 +96,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("T value missing after" + std::string(arg));
+                throw std::runtime_error("Time to maturity (T) value missing after " + std::string(arg));
             }
 
             const std::string name { "T" };
@@ -108,7 +108,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("T value missing after" + std::string(arg));
+                throw std::runtime_error("Number of paths value missing after " + std::string(arg));
             }
 
             const std::string name { "Paths" };
@@ -120,7 +120,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("T value missing after" + std::string(arg));
+                throw std::runtime_error("Number of steps per path value missing after " + std::string(arg));
             }
 
             const std::string name { "steps" };
@@ -132,7 +132,7 @@ CLIArgs parseArgs(int argc, char* argv[])
         {
             if (i + 1 >= argc)
             {
-                throw std::runtime_error("Seed value missing after" + std::string(arg));
+                throw std::runtime_error("PRNG seed value missing after " + std::string(arg));
             }
 
             const std::string name { "seed" };
@@ -140,6 +140,21 @@ CLIArgs parseArgs(int argc, char* argv[])
 
             userArgs.seed = parseDouble(str_seed, name);
         }
+        else if (arg == "--help")
+        {
+            userArgs.help = true;
+        }
     }
     return userArgs;
+}
+
+
+
+void help_msg()
+{
+    std::cout << "Usage:\n" << "price <vanilla|asian> --type <call|put> --S <float> --K <float> --T <float> --r <float> --sigma <float>";
+    std::cout << "--paths <int> [--seed <int>] [--steps <int>] [--help] \n\n";
+    std::cout << "Examples: \n";
+    std::cout << "./price vanilla --type call --S 100 --K 100 --T 1 --r 0.05 --sigma 0.2 --paths 2000000 --seed 42\n";
+    std::cout << "./price asian   --type put  --S 100 --K 100 --T 1 --r 0.05 --sigma 0.2 --steps 252 --paths 2000000 --seed 42\n";
 }
