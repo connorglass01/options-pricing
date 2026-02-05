@@ -1,6 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <optional>
 #include <cstdlib>
 
 namespace Constants
@@ -39,7 +40,8 @@ struct Asian
 
 
 struct MCSettings
-{
+{  
+    std::optional<u_int64_t> seed; 
     std::size_t numPaths { 10000 };
     std::size_t numSteps { Constants::tradingDaysYear };
 };
@@ -47,10 +49,23 @@ struct MCSettings
 struct PriceResult
 {
     double price {};
+    double analyticalPrice {};
     double relErr {};
     double ciLow {};
     double ciHigh {};
     std::size_t numPaths {};
 };
+
+
+struct PriceResultVanilla
+{
+    double price {};
+    double analyticalPrice {};
+    double relErr {};
+    double ciLow {};
+    double ciHigh {};
+    std::size_t numPaths {};
+};
+
 
 #endif

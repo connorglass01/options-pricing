@@ -51,8 +51,12 @@ int main(int argc, char* argv[])
 
     settings.numPaths = userArgs.numPaths;
     settings.numSteps = userArgs.numSteps;
+    settings.seed = userArgs.seed;
 
     // MAYBE REMOVE THE ---STYLE FLAG
+    
+    std::string_view style;
+
     if (std::string(argv[1]) != "--style")
     {
         throw std::runtime_error("Usage: $ <program name> --style <option style>");
@@ -60,7 +64,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        std::string_view style { argv[2] };
+        style = argv[2];
         if (style == "vanilla")
         {
             result = vanilla_mc(data, vanilla, settings);
@@ -76,13 +80,17 @@ int main(int argc, char* argv[])
         }
 
     }
-    
- 
-
-    std::cout << "Price: " << result.price << '\n';
-    //std::cout << "RelErr: " << result.relErr << '\n';
-    //std::cout << "CI Low: " << result.ciLow << '\n';
-    //std::cout << "CI High: " << result.ciHigh << '\n';
-    std::cout << "Paths: " << result.numPaths << '\n';
+    std::cout << "----------------------------- \n"; 
+    std::cout << "Price:    \t" << result.price << '\n';
+    std::cout << "----------------------------- \n";
+    if (style == "vanilla")
+    {
+        std::cout << "BS-Price: \t" << result.analyticalPrice << '\n';
+        std::cout << "AbsErr:   \t" << std::abs(result.price - result.analyticalPrice) << '\n';
+        std::cout << "----------------------------- \n"; 
+    }
+    std::cout << "RelErr:  \t" << result.relErr * 100 << " %\n";
+    std::cout << "95% CI:   \t[" << result.ciLow << ", " << result.ciHigh << "]\n";
+    std::cout << "Paths:    \t" << result.numPaths << '\n';
     return 0;
 }

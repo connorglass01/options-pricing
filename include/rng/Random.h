@@ -3,22 +3,34 @@
 
 #include <chrono>
 #include <random>
+#include <optional>
 
 namespace Random
 {
-    inline std::mt19937 generate()
+	std::seed_seq make_seed(std::optional<u_int64_t> userSeed)
 	{
+		std::seed_seq ss {};
+
+		if (userSeed)
+		{	
+			return std::seed_seq {static_cast<std::seed_seq::result_type>(*userSeed)};
+		}
+
 		std::random_device rd{};
 
-		// Create seed_seq with clock and 7 random numbers from std::random_device
-		std::seed_seq ss{
+		return std::seed_seq {
 			static_cast<std::seed_seq::result_type>(std::chrono::steady_clock::now().time_since_epoch().count()),
 				rd(), rd(), rd(), rd(), rd(), rd(), rd() };
+	}
+
+    inline std::mt19937 generate(std::optional<u_int64_t> userSeed)
+	{
+		std::seed_seq ss{ make_seed(userSeed) };
 
 		return std::mt19937{ ss };
 	}
 
-    inline std::mt19937 mt{ generate() };
+    //inline std::mt19937 mt{ generate() };
 
 }
 

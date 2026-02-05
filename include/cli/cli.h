@@ -2,6 +2,8 @@
 #define FLAGS_H
 
 #include <string>
+#include <cmath>
+#include <optional>
 
 #include "../pricing/types.h"
 
@@ -21,7 +23,9 @@ struct CLIArgs
     double T { 1.0 };
 
     std::size_t numPaths { 10000 };
-    std::size_t numSteps { Constants::tradingDaysYear };
+    std::size_t numSteps { static_cast<std::size_t>(std::round(Constants::tradingDaysYear * T)) };
+
+    std::optional<u_int64_t> seed;
 
     bool help { false };
 };

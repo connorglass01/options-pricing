@@ -128,7 +128,18 @@ CLIArgs parseArgs(int argc, char* argv[])
 
             userArgs.numSteps = parseDouble(str_steps, name);
         }
-    }
+        else if (arg == "--seed")
+        {
+            if (i + 1 >= argc)
+            {
+                throw std::runtime_error("Seed value missing after" + std::string(arg));
+            }
 
+            const std::string name { "seed" };
+            std::string str_seed { argv[++i] };
+
+            userArgs.seed = parseDouble(str_seed, name);
+        }
+    }
     return userArgs;
 }
