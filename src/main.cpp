@@ -79,17 +79,17 @@ int main(int argc, char* argv[])
     }
 
     // Printing the output
-    std::cout << "----------------------------- \n"; 
+    std::cout << "----------------------------------- \n"; 
     std::cout << "Price:    \t" << result.price << '\n';
-    std::cout << "----------------------------- \n";
+    std::cout << "----------------------------------- \n";
     if (style == "vanilla")
     {
         std::cout << "BS-Price: \t" << result.analyticalPrice << '\n';
         std::cout << "AbsErr:   \t" << std::abs(result.price - result.analyticalPrice) << '\n';
-        std::cout << "----------------------------- \n"; 
+        std::cout << "----------------------------------- \n"; 
     }
-    std::cout << "RelErr:  \t" << result.relErr * 100 << " %\n";
+    std::cout << "RelErr:  \t" << result.relErr * 100 << "%\n";
     std::cout << "95% CI:   \t[" << result.ciLow << ", " << result.ciHigh << "]\n";
-    std::cout << "Paths:    \t" << result.numPaths << '\n';
+    std::cout << "Paths:    \t" << result.numPaths << "\n\n";
     return 0;
 }

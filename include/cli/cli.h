@@ -5,6 +5,7 @@
 #include <cmath>
 #include <optional>
 #include <iostream>
+#include <cstdint>
 
 #include "../pricing/types.h"
 
@@ -26,7 +27,7 @@ struct CLIArgs
     std::size_t numPaths { 10000 };
     std::size_t numSteps { static_cast<std::size_t>(std::round(Constants::tradingDaysYear * T)) };
 
-    std::optional<u_int64_t> seed;
+    std::optional<uint64_t> seed;
 
     bool help {false};
 };

@@ -152,9 +152,16 @@ CLIArgs parseArgs(int argc, char* argv[])
 
 void help_msg()
 {
-    std::cout << "Usage:\n" << "price <vanilla|asian> --type <call|put> --S <float> --K <float> --T <float> --r <float> --sigma <float>";
-    std::cout << "--paths <int> [--seed <int>] [--steps <int>] [--help] \n\n";
+    std::cout << "Usage:\n";
+    std::cout << "----------\n";
+    std::cout << "Specify the option style and run the exectuable via\n";
+    std::cout << "./build/price <vanilla|asian>\n\n";
+    std::cout << "Optional Flags:\n";
+    std::cout << "------------------\n";
+    std::cout << "--type <call|put>\n--S0 <float>\n--K <float>\n--T <float>\n--r <float>\n--sigma <float>\n";
+    std::cout << "--paths <int>\n--seed <int>\n--steps <int>\n[--help] \n\n";
     std::cout << "Examples: \n";
-    std::cout << "./price vanilla --type call --S 100 --K 100 --T 1 --r 0.05 --sigma 0.2 --paths 2000000 --seed 42\n";
-    std::cout << "./price asian   --type put  --S 100 --K 100 --T 1 --r 0.05 --sigma 0.2 --steps 252 --paths 2000000 --seed 42\n";
+    std::cout << "----------\n";
+    std::cout << "./build/price vanilla --type call --S0 100 --K 100 --T 1.0 --r 0.05 --sigma 0.2 --paths 2000000 --seed 42\n";
+    std::cout << "./build/price asian --type call --S0 40 --K 35 --T 0.33 --r 0.07 --sigma 0.2 --steps 88\n";
 }
